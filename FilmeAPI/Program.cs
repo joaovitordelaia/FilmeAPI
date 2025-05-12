@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 //conexão ao banco de dados
-var connectionString = builder.Configuration.GetConnectionString("FilmeContext");
+var connectionString = builder.Configuration.GetConnectionString("FilmeConnection");
 
 builder.Services.AddDbContext<FilmeContext>(opts => opts.UseMySql(connectionString,
     ServerVersion.AutoDetect(connectionString)));

@@ -40,3 +40,11 @@
 
 // interface IActionResult
 /// é responsavel por retornar uma resposta ao usuario de acordo com o endpoint
+
+
+
+// Criando migrations
+/// 1 - apos configurar a string de conexão, e definir o dbcontext
+/// 2 - é importante revisar as classes de models, para saber se tem a [key] e outros como anotação sobre a propriedade identificadora
+/// 3 - abrir o terminal e rodar o comando: Add-migration CriandoTabelaDeFilme
+/// 4 - abrir o terminal e rodar o comando: Update-Database
