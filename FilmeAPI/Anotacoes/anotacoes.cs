@@ -48,3 +48,34 @@
 /// 2 - é importante revisar as classes de models, para saber se tem a [key] e outros como anotação sobre a propriedade identificadora
 /// 3 - abrir o terminal e rodar o comando: Add-migration CriandoTabelaDeFilme
 /// 4 - abrir o terminal e rodar o comando: Update-Database
+/// 
+
+
+// DTOs chamado de Data Transfer Object
+/// * O CreateFilmeDto é responsavel por mascarar o objeto filme
+/// e não deixar exposto a estrutura do banco de dados.
+/// Com DTOs podemos definir os parâmetros enviados de maneira isolada do nosso modelo do banco de dados.
+/// 
+/// * por isso no controller os endpoints deverão usar o CreateFilmeDto
+/// e o vinculo com do DTO com o model é usado o AutoMapper
+/// 
+/// * o AutoMapper é uma biblioteca que serve para mapear objetos
+/// em program.cs é posto o seguinte codigo, para registrar o AutoMapper no projeto ASP.NET Core
+/// builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+///  
+/// * Deve é criado uma pasta dentro da pasta Data, chamada DTOs,
+///     º e dentro dela é criado o arquivo CreateFilmeDto.cs ele sera responsavel por mascarar o objeto filme
+///           º com isso mudaremos nos controllers a assinatura dos endpoints o objeto filme para CreateFilmeDto
+/// * Tambem tem que criar uma pasta profile para abrigar o arquivo de mapeamento 
+///     º dentro dela é criado o arquivo FilmeProfile.cs que sera para transformar um tipo em outro.
+///     º cada endpoint que for usar um DTO, como update, delete, Create, etc 
+///     º Deve ser criado aquele vinculo das classes DTO com o model
+/// * No controllador, deve ser injetado o IMapper no construtor
+///     º e dentro do endpoint que usar o objeto filme, deve ser usado o _mapper.Map<Filme>(filmeDto)
+///     º pois ira realizar a conversão do model para o DTO
+///     
+///     
+///  * quando é criado o outro endpoint normalmente cria outro DTO por motivos de semantica
+
+
+

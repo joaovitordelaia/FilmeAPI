@@ -9,6 +9,9 @@ var connectionString = builder.Configuration.GetConnectionString("FilmeConnectio
 builder.Services.AddDbContext<FilmeContext>(opts => opts.UseMySql(connectionString,
     ServerVersion.AutoDetect(connectionString)));
 
+// essa linha de codigo é responsável por registrar o AutoMapper no projeto ASP.NET Core 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

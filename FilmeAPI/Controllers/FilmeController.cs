@@ -1,4 +1,6 @@
-﻿using FilmeAPI.Data;
+﻿using AutoMapper;
+using FilmeAPI.Data;
+using FilmeAPI.Data.DTOs;
 using FilmeAPI.Models;
 using Microsoft.AspNetCore.Mvc;// essa biblioteca serve para fazer requisições http
 namespace FilmeAPI.Controllers;
@@ -27,11 +29,14 @@ public class FilmeController : ControllerBase //  toda vez que você cria uma AP
 
     // esse _context serve para acessar o banco de dados
     private FilmeContext _context;
+    // usado para usar o autoMapper no controller
+    private IMapper _mapper;
 
-    //esse contrutor serve para injetar o contexto do banco de dados ao controller
-    public FilmeController(FilmeContext context)
+    //esse contrutor serve para injetar o contexto do banco de dados e tambem o AutoMapper ao controller
+    public FilmeController(FilmeContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
 
@@ -39,13 +44,15 @@ public class FilmeController : ControllerBase //  toda vez que você cria uma AP
     // e tambem deve ser informado o caminho que o usuario pode usar para acessar o objeto
     // por isso nesse endpoint estamos usando o CreatedAtAction.
     [HttpPost]
-    public IActionResult AdicionaFilme([FromBody] Filme filme)// esse FromBody serve para
+    //                                    O CreateFilmeDto é responsavel por mascarar o objeto filme e não deixar exposto a estrutura do banco de dados                       
+    public IActionResult AdicionaFilme([FromBody] CreateFilmeDto filmeDto)// esse FromBody serve para
     {
+        Filme filme = _mapper.Map<Filme>(filmeDto);// aqui estamos usando o AutoMapper para mapear o objeto filmeDto para o objeto filme
         _context.Filmes.Add(filme);
         // quando for inserir algum objeto no banco de dados é necessario usar depois do add o SaveChanges
         _context.SaveChanges();// seria como um commit no banco de dados
 
-        return CreatedAtAction(nameof(RecuperaFilmePorId), new {id = filme.id}, filme);
+        return CreatedAtAction(nameof(RecuperaFilmePorId), new { id = filme.id }, filme);
     }
 
     [HttpGet]
@@ -67,13 +74,28 @@ public class FilmeController : ControllerBase //  toda vez que você cria uma AP
         return _context.Filmes.Skip(skip).Take(take);
     }
 
-    [HttpGet("localizarUnico/{id}")]
+    [HttpGet("LocalizarUnico/{id}")]
     // interface IActionResult: é responsavel por retornar uma resposta ao usuario de acordo com o endpoint
     public IActionResult RecuperaFilmePorId(int id)
     {
-       var filme = _context.Filmes.FirstOrDefault(filme => filme.id == id);
+        // essa linha está fazendo uma consulta no banco de dados e retornando o primeiro filme que encontrar com o id informado
+        var filme = _context.Filmes.FirstOrDefault(filme => filme.id == id);
         if (filme == null) return NotFound();
         return Ok(filme);
-        
+
+    }
+    // esse endpoint serve para atualizar um filme
+    [HttpPut("Atualizar/{id}")]
+    public IActionResult AtualizaFilme(int id, [FromBody] UpdateFilmeDto filmeDto)
+    {
+        // reutilizando a linha do recuperaFilmePorId pois precisamos encontrar o filme para atualizar
+        var filme = _context.Filmes.FirstOrDefault(filme => filme.id == id);
+            if (filme == null) return NotFound();
+        // O metodo Map, pega os dados que vieram da requisição (filmeDto) E "joga por cima"
+        // do objeto filme já existente, que veio do banco de dados
+        _mapper.Map(filmeDto, filme);
+        //salvando as alterações no banco de dados
+        _context.SaveChanges();
+        return NoContent();
     }
 }
