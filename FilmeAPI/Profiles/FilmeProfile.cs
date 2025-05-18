@@ -11,5 +11,7 @@ public class FilmeProfile : Profile
         // o AutoMapper vai mapear os DTOs para as classes e vice-versa
         CreateMap<CreateFilmeDto, Filme>();
         CreateMap<UpdateFilmeDto, Filme>();
+        CreateMap<Filme, ReadFilmeDto>();
+        CreateMap<Filme, UpdateFilmeDto>();
     }
 }
