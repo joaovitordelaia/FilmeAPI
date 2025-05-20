@@ -69,7 +69,9 @@ public class FilmeController : ControllerBase //  toda vez que você cria uma AP
     //                                    O CreateFilmeDto é responsavel por mascarar o objeto filme e não deixar exposto a estrutura do banco de dados                       
     public IActionResult AdicionaFilme([FromBody] CreateFilmeDto filmeDto)// esse FromBody serve para
     {
-        Filme filme = _mapper.Map<Filme>(filmeDto);// aqui estamos usando o AutoMapper para mapear o objeto filmeDto para o objeto filme
+        // aqui estamos usando o AutoMapper para mapear o objeto filmeDto para o objeto filme
+        Filme filme = _mapper.Map<Filme>(filmeDto);
+
         _context.Filmes.Add(filme);
         // quando for inserir algum objeto no banco de dados é necessario usar depois do add o SaveChanges
         _context.SaveChanges();// seria como um commit no banco de dados
