@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Filme2Connection");
 
 builder.Services.AddDbContext<FilmeContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseLazyLoadingProxies().UseSqlServer(connectionString));           
 
 //builder.Services.AddDbContext<FilmeContext>(opts => opts.UseMySql(connectionString,
 //    ServerVersion.AutoDetect(connectionString)));
