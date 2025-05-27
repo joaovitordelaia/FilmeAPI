@@ -11,10 +11,17 @@ public class CinemaProfile : Profile
         
         CreateMap<CreateCinemaDto, Cinema>();
         CreateMap<UpdateCinemaDto, Cinema>();
-        CreateMap<Cinema, ReadCinemaDto>().ForMember
+        CreateMap<Cinema, ReadCinemaDto>()
+            .ForMember
             (cinemaDto => cinemaDto.ReadEndereco, 
-            opts => opts.MapFrom(cinema => cinema.Endereco));
-        // Basicamente a linha abaixo está fazendo um mapeamento de Endereco com o
+            opts => opts.MapFrom(cinema => cinema.Endereco))
+            .ForMember
+            (cinemaDto => cinemaDto.Sessao,
+            opts => opts.MapFrom(cinema => cinema.Sessao)); ;
+
+
+
+        // Basicamente as linhas acima está fazendo um mapeamento de Endereco com o
         // ReadEnderecoDto, pois dentro da Dto do ReadCinemaDto tem uma propriedade
         // do tipo ReadEnderecoDto chamada ReadEndereco e dentro do model Cinema tem
         // uma propriedade do tipo Endereco chamada Endereco então essa linha está

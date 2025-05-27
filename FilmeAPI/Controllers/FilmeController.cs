@@ -95,7 +95,7 @@ public class FilmeController : ControllerBase //  toda vez que você cria uma AP
         // boa pratica é por o resultado vindo do context em uma variavel
         var filme = _context.Filmes.ToList();
         // com essa variavel que recebeu o resultado nos fazemos conversão para o DTO
-        return _mapper.Map<List<ReadFilmeDto>>(filme);
+        return _mapper.Map<List<ReadFilmeDto>>(filme).ToList(); ;
     }
 
     /// <summary>

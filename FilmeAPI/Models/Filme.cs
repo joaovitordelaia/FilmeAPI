@@ -20,4 +20,6 @@ public class Filme
     [Range(71, 300, ErrorMessage = "O tempo de duração aceitavel é entre 71 minutos e 300 minutos")]
     public int Duracao { get; set; }
 
+    public virtual ICollection<Sessao>  Sessao { get; set; }
+
 }

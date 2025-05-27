@@ -20,5 +20,7 @@ public class Cinema // depende do endereço para assistir com isso o EF seguira 
     //o endereço e se eu consultar um endereço ele trara o cinema.
     public virtual Endereco Endereco { get; set; }
 
+    public virtual ICollection<Sessao> Sessao { get; set; }
+
 
 }
