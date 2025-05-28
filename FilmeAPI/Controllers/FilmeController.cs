@@ -7,22 +7,6 @@ using Microsoft.AspNetCore.Mvc;// essa biblioteca serve para fazer requisições
 namespace FilmeAPI.Controllers;
 
 
-//[ApiController]
-//[Route("api/[controller]")]
-//public class FilmeController : ControllerBase
-//{
-//    private static List<Filme> filmes = new List<Filme>();
-
-//    [HttpPost("adiciona")]
-//    public void AdicionaFilme([FromBody] Filme filme)
-//    {
-//        filmes.Add(filme);
-//        Console.WriteLine(filme.Titulo);
-//        Console.WriteLine(filme.Duracao);
-//    }
-//}
-
-
 [ApiController]// anotações
 [Route("[Controller]")]// 
 [Produces("application/json")]
